@@ -157,12 +157,13 @@ namespace MapEditor
                 }
 
                 //Current location in world
-                Point worldPoint = new Point(this._locationMouse.X * this._widthCell, WORLD_Y - this._locationMouse.Y * this._heightCell);
+                Point currentMouse = new Point(e.X - this.worldSpace.AutoScrollPosition.X, WORLD_Y -  (e.Y - this.worldSpace.AutoScrollPosition.Y));
+                WorldRect currentObject = new WorldRect(currentMouse, new Size(1, 1));
                 for (int i = _listObject.Count - 1; i >= 0; i--)
                 {
                     var obj = this._listObject[i];
-                    if (worldPoint.X == obj.X
-                        && worldPoint.Y == obj.Y)
+                    WorldRect rectObject = new WorldRect(obj.X, obj.Y, obj.Width, obj.Height);
+                    if(rectObject.Contains(currentObject))
                     {
                         var result = MessageBox.Show("Do you want to delete this Object?"
                             + "\nType:\t" + obj.Id
@@ -490,6 +491,20 @@ namespace MapEditor
             list.Add(int.Parse(line));
 
             return list;
+        }
+
+        private void btnHide_Click(object sender, EventArgs e)
+        {
+            if(!this.splitContainer1.Panel2Collapsed)
+            {
+                this.splitContainer1.Panel2Collapsed = true;
+                this.btnHide.Text = "<<";
+            }
+            else
+            {
+                this.splitContainer1.Panel2Collapsed = false;
+                this.btnHide.Text = ">>";
+            }
         }
     }
 }

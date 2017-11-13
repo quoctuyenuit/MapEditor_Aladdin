@@ -35,6 +35,7 @@
             this.subMenu_OpenImage = new System.Windows.Forms.ToolStripMenuItem();
             this.subMenu_OpenFile = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnHide = new System.Windows.Forms.Button();
             this.gr_object = new System.Windows.Forms.GroupBox();
             this.btnSaveQuadTree = new System.Windows.Forms.Button();
             this.check_deleteObject = new System.Windows.Forms.CheckBox();
@@ -138,6 +139,17 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(352, 662);
             this.panel1.TabIndex = 1;
+            // 
+            // btnHide
+            // 
+            this.btnHide.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnHide.Location = new System.Drawing.Point(1472, 0);
+            this.btnHide.Name = "btnHide";
+            this.btnHide.Size = new System.Drawing.Size(57, 28);
+            this.btnHide.TabIndex = 3;
+            this.btnHide.Text = ">>";
+            this.btnHide.UseVisualStyleBackColor = true;
+            this.btnHide.Click += new System.EventHandler(this.btnHide_Click);
             // 
             // gr_object
             // 
@@ -502,7 +514,7 @@
             // btn_OpenImage
             // 
             this.btn_OpenImage.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.btn_OpenImage.Location = new System.Drawing.Point(488, 266);
+            this.btn_OpenImage.Location = new System.Drawing.Point(488, 257);
             this.btn_OpenImage.Name = "btn_OpenImage";
             this.btn_OpenImage.Size = new System.Drawing.Size(227, 105);
             this.btn_OpenImage.TabIndex = 3;
@@ -525,6 +537,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.panel1);
+            this.splitContainer1.Panel2MinSize = 0;
             this.splitContainer1.Size = new System.Drawing.Size(1558, 662);
             this.splitContainer1.SplitterDistance = 1202;
             this.splitContainer1.TabIndex = 4;
@@ -568,6 +581,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1558, 690);
+            this.Controls.Add(this.btnHide);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -635,6 +649,7 @@
         private System.Windows.Forms.Button btnSaveQuadTree;
         private System.Windows.Forms.Button btn_Refresh;
         private System.Windows.Forms.ToolStripMenuItem subMenu_OpenFile;
+        private System.Windows.Forms.Button btnHide;
     }
 }
 

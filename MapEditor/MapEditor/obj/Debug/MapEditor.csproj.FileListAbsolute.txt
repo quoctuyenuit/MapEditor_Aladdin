@@ -1,0 +1,10 @@
+C:\Users\QuocTuyen\Documents\MapEditor_Aladdin\MapEditor\MapEditor\bin\Debug\MapEditor.exe.config
+C:\Users\QuocTuyen\Documents\MapEditor_Aladdin\MapEditor\MapEditor\bin\Debug\MapEditor.exe
+C:\Users\QuocTuyen\Documents\MapEditor_Aladdin\MapEditor\MapEditor\bin\Debug\MapEditor.pdb
+C:\Users\QuocTuyen\Documents\MapEditor_Aladdin\MapEditor\MapEditor\obj\Debug\MapEditor.csprojResolveAssemblyReference.cache
+C:\Users\QuocTuyen\Documents\MapEditor_Aladdin\MapEditor\MapEditor\obj\Debug\MapEditor.Form1.resources
+C:\Users\QuocTuyen\Documents\MapEditor_Aladdin\MapEditor\MapEditor\obj\Debug\MapEditor.ImageBox.resources
+C:\Users\QuocTuyen\Documents\MapEditor_Aladdin\MapEditor\MapEditor\obj\Debug\MapEditor.Properties.Resources.resources
+C:\Users\QuocTuyen\Documents\MapEditor_Aladdin\MapEditor\MapEditor\obj\Debug\MapEditor.csproj.GenerateResource.Cache
+C:\Users\QuocTuyen\Documents\MapEditor_Aladdin\MapEditor\MapEditor\obj\Debug\MapEditor.exe
+C:\Users\QuocTuyen\Documents\MapEditor_Aladdin\MapEditor\MapEditor\obj\Debug\MapEditor.pdb
