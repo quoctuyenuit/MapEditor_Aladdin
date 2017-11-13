@@ -29,13 +29,13 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.subMenu_New = new System.Windows.Forms.ToolStripMenuItem();
             this.subMenu_OpenImage = new System.Windows.Forms.ToolStripMenuItem();
             this.subMenu_OpenFile = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btnHide = new System.Windows.Forms.Button();
             this.gr_object = new System.Windows.Forms.GroupBox();
             this.btnSaveQuadTree = new System.Windows.Forms.Button();
             this.check_deleteObject = new System.Windows.Forms.CheckBox();
@@ -64,6 +64,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label = new System.Windows.Forms.Label();
+            this.btnHide = new System.Windows.Forms.Button();
             this.imageListObjects = new System.Windows.Forms.ImageList(this.components);
             this.btn_OpenImage = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -139,17 +140,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(352, 662);
             this.panel1.TabIndex = 1;
-            // 
-            // btnHide
-            // 
-            this.btnHide.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnHide.Location = new System.Drawing.Point(1472, 0);
-            this.btnHide.Name = "btnHide";
-            this.btnHide.Size = new System.Drawing.Size(57, 28);
-            this.btnHide.TabIndex = 3;
-            this.btnHide.Text = ">>";
-            this.btnHide.UseVisualStyleBackColor = true;
-            this.btnHide.Click += new System.EventHandler(this.btnHide_Click);
             // 
             // gr_object
             // 
@@ -505,6 +495,17 @@
             this.label.TabIndex = 0;
             this.label.Text = "width";
             // 
+            // btnHide
+            // 
+            this.btnHide.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnHide.Location = new System.Drawing.Point(1472, 0);
+            this.btnHide.Name = "btnHide";
+            this.btnHide.Size = new System.Drawing.Size(57, 28);
+            this.btnHide.TabIndex = 3;
+            this.btnHide.Text = ">>";
+            this.btnHide.UseVisualStyleBackColor = true;
+            this.btnHide.Click += new System.EventHandler(this.btnHide_Click);
+            // 
             // imageListObjects
             // 
             this.imageListObjects.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
@@ -584,6 +585,7 @@
             this.Controls.Add(this.btnHide);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "Form1";
