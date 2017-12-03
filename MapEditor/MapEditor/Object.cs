@@ -11,6 +11,7 @@ namespace MapEditor
         public enum EObjectID
         {
             GROUND,
+            GROUND_DROP,
             ROPE,
             WALL,
             LEVERAGE,
@@ -38,7 +39,9 @@ namespace MapEditor
             HEARTITEM,
             MONKEYITEM,
             JARITEM,
+            STICKITEM,
             STAIR,
+            TRAP,
             NONE
         }
 
@@ -47,6 +50,7 @@ namespace MapEditor
         private int _x;
         private int _y;
         private EObjectID _id;
+        private int _direct;//0-> left to right; 1-> right to left
         private int _key;
 
         public int Width
@@ -124,6 +128,19 @@ namespace MapEditor
             set
             {
                 _key = value;
+            }
+        }
+
+        public int Direct
+        {
+            get
+            {
+                return _direct;
+            }
+
+            set
+            {
+                _direct = value;
             }
         }
 

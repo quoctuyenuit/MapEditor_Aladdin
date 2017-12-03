@@ -107,6 +107,5 @@ namespace MapEditor
             base.OnLoad(e);
         }
         #endregion
-
     }
 }

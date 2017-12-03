@@ -11,7 +11,7 @@ namespace MapEditor
     class QNode
     {
         #region Property
-        private const int MAX_LEVEL = 5;
+        private const int MAX_LEVEL = 6;
         private const int MAX_OBJECT = 1;
         private int _level;
         private int _id;

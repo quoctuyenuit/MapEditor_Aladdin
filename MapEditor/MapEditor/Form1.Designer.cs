@@ -35,8 +35,11 @@
             this.subMenu_New = new System.Windows.Forms.ToolStripMenuItem();
             this.subMenu_OpenImage = new System.Windows.Forms.ToolStripMenuItem();
             this.subMenu_OpenFile = new System.Windows.Forms.ToolStripMenuItem();
+            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.subMenu_DeleteObject = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.gr_object = new System.Windows.Forms.GroupBox();
+            this.cb_directStair = new System.Windows.Forms.ComboBox();
             this.btnSaveQuadTree = new System.Windows.Forms.Button();
             this.check_deleteObject = new System.Windows.Forms.CheckBox();
             this.cb_typeObject = new System.Windows.Forms.ComboBox();
@@ -86,12 +89,14 @@
             // 
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem});
+            this.fileToolStripMenuItem,
+            this.editToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1558, 28);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
+            this.menuStrip1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.menuStrip1_KeyPress);
             // 
             // fileToolStripMenuItem
             // 
@@ -130,6 +135,22 @@
             this.subMenu_OpenFile.Text = "Open File";
             this.subMenu_OpenFile.Click += new System.EventHandler(this.subMenu_OpenFile_Click);
             // 
+            // editToolStripMenuItem
+            // 
+            this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.subMenu_DeleteObject});
+            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(47, 24);
+            this.editToolStripMenuItem.Text = "Edit";
+            // 
+            // subMenu_DeleteObject
+            // 
+            this.subMenu_DeleteObject.Name = "subMenu_DeleteObject";
+            this.subMenu_DeleteObject.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
+            this.subMenu_DeleteObject.Size = new System.Drawing.Size(229, 26);
+            this.subMenu_DeleteObject.Text = "Delete Object";
+            this.subMenu_DeleteObject.Click += new System.EventHandler(this.subMenu_DeleteObject_Click);
+            // 
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -146,6 +167,7 @@
             this.gr_object.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.gr_object.Controls.Add(this.cb_directStair);
             this.gr_object.Controls.Add(this.btnSaveQuadTree);
             this.gr_object.Controls.Add(this.check_deleteObject);
             this.gr_object.Controls.Add(this.cb_typeObject);
@@ -168,10 +190,23 @@
             this.gr_object.TabStop = false;
             this.gr_object.Text = "Object";
             // 
+            // cb_directStair
+            // 
+            this.cb_directStair.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cb_directStair.FormattingEnabled = true;
+            this.cb_directStair.Items.AddRange(new object[] {
+            "Left to Right ->",
+            "Right to Left <-"});
+            this.cb_directStair.Location = new System.Drawing.Point(42, 194);
+            this.cb_directStair.Name = "cb_directStair";
+            this.cb_directStair.Size = new System.Drawing.Size(219, 24);
+            this.cb_directStair.TabIndex = 8;
+            this.cb_directStair.Visible = false;
+            // 
             // btnSaveQuadTree
             // 
             this.btnSaveQuadTree.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.btnSaveQuadTree.Location = new System.Drawing.Point(90, 257);
+            this.btnSaveQuadTree.Location = new System.Drawing.Point(90, 251);
             this.btnSaveQuadTree.Name = "btnSaveQuadTree";
             this.btnSaveQuadTree.Size = new System.Drawing.Size(144, 34);
             this.btnSaveQuadTree.TabIndex = 7;
@@ -182,7 +217,7 @@
             // check_deleteObject
             // 
             this.check_deleteObject.AutoSize = true;
-            this.check_deleteObject.Location = new System.Drawing.Point(23, 206);
+            this.check_deleteObject.Location = new System.Drawing.Point(42, 224);
             this.check_deleteObject.Name = "check_deleteObject";
             this.check_deleteObject.Size = new System.Drawing.Size(116, 21);
             this.check_deleteObject.TabIndex = 6;
@@ -220,11 +255,15 @@
             "HEARTITEM",
             "MONKEYITEM",
             "JARITEM",
-            "STAIR"});
+            "STAIR",
+            "GROUND_DROP",
+            "STICKITEM",
+            "TRAP"});
             this.cb_typeObject.Location = new System.Drawing.Point(42, 160);
             this.cb_typeObject.Name = "cb_typeObject";
             this.cb_typeObject.Size = new System.Drawing.Size(219, 28);
             this.cb_typeObject.TabIndex = 5;
+            this.cb_typeObject.SelectedIndexChanged += new System.EventHandler(this.cb_typeObject_SelectedIndexChanged);
             // 
             // txt_H
             // 
@@ -652,6 +691,9 @@
         private System.Windows.Forms.Button btn_Refresh;
         private System.Windows.Forms.ToolStripMenuItem subMenu_OpenFile;
         private System.Windows.Forms.Button btnHide;
+        private System.Windows.Forms.ComboBox cb_directStair;
+        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem subMenu_DeleteObject;
     }
 }
 

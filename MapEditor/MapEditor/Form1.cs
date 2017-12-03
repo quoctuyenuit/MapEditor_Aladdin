@@ -33,6 +33,7 @@ namespace MapEditor
             this._widthCell = int.Parse(this.txt_width.Text);
             this._heightCell = int.Parse(this.txt_height.Text);
             this.cb_typeObject.SelectedIndex = 0;
+            this.cb_directStair.SelectedIndex = 0;
             this._listObject = new List<GameObject>();
 
         }
@@ -70,10 +71,12 @@ namespace MapEditor
                 this._listObject[i].Key = i;
 
             this.quadtree.Clear();
+            //Đổ tất cả object vào node đầu tiên của quadtree
             foreach (var item in this._listObject)
                 this.quadtree.ListObject.Add(item);
 
-            this.quadtree.BuildTree();
+            this.quadtree.BuildTree();//Xây dụng quadtree
+
             try
             {
                 string path = SaveQuadtree();
@@ -148,6 +151,7 @@ namespace MapEditor
         /// <param name="e"></param>
         private void worldSpace_MouseDown(object sender, MouseEventArgs e)
         {
+            //Delete Object
             if (check_deleteObject.Checked)
             {
                 if (this._listObject.Count == 0)
@@ -157,20 +161,22 @@ namespace MapEditor
                 }
 
                 //Current location in world
-                Point currentMouse = new Point(e.X - this.worldSpace.AutoScrollPosition.X, WORLD_Y -  (e.Y - this.worldSpace.AutoScrollPosition.Y));
+                Point currentMouse = new Point(e.X - this.worldSpace.AutoScrollPosition.X, WORLD_Y - (e.Y - this.worldSpace.AutoScrollPosition.Y));
                 WorldRect currentObject = new WorldRect(currentMouse, new Size(1, 1));
                 for (int i = _listObject.Count - 1; i >= 0; i--)
                 {
                     var obj = this._listObject[i];
                     WorldRect rectObject = new WorldRect(obj.X, obj.Y, obj.Width, obj.Height);
-                    if(rectObject.Contains(currentObject))
+                    if (rectObject.Contains(currentObject))
                     {
+                        string direct = (obj.Direct == 0) ? "Left to Right" : "Right to Left";
                         var result = MessageBox.Show("Do you want to delete this Object?"
                             + "\nType:\t" + obj.Id
                             + "\nX:\t" + obj.X + "\t->\t" + obj.X / this._widthCell
                             + "\nY:\t" + obj.Y + "\t->\t" + (WORLD_Y - obj.Y) / this._heightCell
                             + "\nWidth:\t" + obj.Width + "\t->\t" + obj.Width / this._widthCell
-                            + "\nHeight\t" + obj.Height + "\t->\t" + obj.Height / this._heightCell,
+                            + "\nHeight\t" + obj.Height + "\t->\t" + obj.Height / this._heightCell
+                            + "\nDirect:\t" + direct,
                             "Notify", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                         if (result == DialogResult.Yes)
@@ -208,13 +214,14 @@ namespace MapEditor
 
                 if (this._countClick == 1)
                 {
+                    //Xác định position
                     _object = new GameObject();
                     //Lấy toạ độ theo toạ độ world 
                     this._object.X = this._locationMouse.X * this._widthCell;
                     this._object.Y = WORLD_Y - this._locationMouse.Y * this._heightCell;
 
                     Rectangle rect = new Rectangle(new Point(this._object.X - 2, WORLD_Y - this._object.Y - 2), new Size(3, 3));
-                    this.DrawDemo(rect);
+                    this.DrawDemo(rect, _object.Id);
 
                 }
                 else
@@ -244,8 +251,7 @@ namespace MapEditor
                     this.txt_W.Text = this._object.Width.ToString();
                     this.txt_H.Text = this._object.Height.ToString();
 
-                    Rectangle rect = new Rectangle(new Point(this._object.X, WORLD_Y - this._object.Y), new Size(this._object.Width, this._object.Height));
-                    this.DrawDemo(rect);
+                  
                     this._countClick = 0; ;
 
                     switch (cb_typeObject.SelectedIndex)
@@ -274,9 +280,15 @@ namespace MapEditor
                         case 21: _object.Id = GameObject.EObjectID.MONKEYITEM; break;
                         case 22: _object.Id = GameObject.EObjectID.JARITEM; break;
                         case 23: _object.Id = GameObject.EObjectID.STAIR; break;
-
+                        case 24: _object.Id = GameObject.EObjectID.GROUND_DROP; break;
+                        case 25: _object.Id = GameObject.EObjectID.STICKITEM; break;
+                        case 26: _object.Id = GameObject.EObjectID.TRAP; break;
                     }
+                    _object.Direct = cb_directStair.SelectedIndex;
                     this._listObject.Add(_object);
+
+                    Rectangle rect = new Rectangle(new Point(this._object.X, WORLD_Y - this._object.Y), new Size(this._object.Width, this._object.Height));
+                    this.DrawDemo(rect, _object.Id);
                 }
 
                 this.txt_X.Text = (this._object.X / this._widthCell).ToString();
@@ -293,13 +305,25 @@ namespace MapEditor
         /// Draw a rectangle demo for objects on map
         /// </summary>
         /// <param name="rect"></param>
-        private void DrawDemo(Rectangle rect)
+        private void DrawDemo(Rectangle rect, GameObject.EObjectID id)
         {
             Image tempBitmap = this.worldSpace.Image;
 
             using (Graphics graphics = Graphics.FromImage(tempBitmap))
             {
-                Pen pen = new Pen(Color.White);
+                Color color;
+                switch (id)
+                {
+                    case GameObject.EObjectID.GUARDS1: color = Color.Yellow; break;
+                    case GameObject.EObjectID.GUARDS2: color = Color.Red; break;
+                    case GameObject.EObjectID.GUARDS3: color = Color.Blue; break;
+                    case GameObject.EObjectID.CIVILIAN1: color = Color.Green; break;
+                    case GameObject.EObjectID.CIVILIAN2: color = Color.Gold; break;
+                    case GameObject.EObjectID.CIVILIAN3: color = Color.Gray; break;
+                    case GameObject.EObjectID.CIVILIAN4: color = Color.FloralWhite ; break;
+                    default: color = Color.White; break;
+                }
+                Pen pen = new Pen(color);
                 pen.Width = 3;
                 graphics.DrawRectangle(pen, rect);
             }
@@ -332,7 +356,7 @@ namespace MapEditor
 
             foreach (var item in this._listObject)
             {
-                writer.WriteLine(index++ + " " + this.ParseID(item.Id) + " " + item.X + " " + item.Y + " " + item.Width + " " + item.Height);
+                writer.WriteLine(index++ + " " + this.ParseID(item.Id) + " " + item.X + " " + item.Y + " " + item.Width + " " + item.Height+ " " + item.Direct);
             }
 
             //Write quadtree
@@ -375,6 +399,9 @@ namespace MapEditor
                 case GameObject.EObjectID.MONKEYITEM: return 22;
                 case GameObject.EObjectID.JARITEM: return 23;
                 case GameObject.EObjectID.STAIR: return 24;
+                case GameObject.EObjectID.GROUND_DROP: return 25;
+                case GameObject.EObjectID.STICKITEM: return 26;
+                case GameObject.EObjectID.TRAP: return 27;
                 default: return 0;
             }
         }
@@ -407,6 +434,9 @@ namespace MapEditor
                 case 22: return GameObject.EObjectID.MONKEYITEM;
                 case 23: return GameObject.EObjectID.JARITEM;
                 case 24: return GameObject.EObjectID.STAIR;
+                case 25: return GameObject.EObjectID.GROUND_DROP;
+                case 26: return GameObject.EObjectID.STICKITEM;
+                case 27: return GameObject.EObjectID.TRAP;
                 default: return GameObject.EObjectID.NONE;
             }
         }
@@ -416,8 +446,6 @@ namespace MapEditor
             this.quadtree.Clear();
             this._listObject.Clear();
             this.worldSpace.Image = new Bitmap(this._imageBuffer);
-            this.gr_object.Enabled = false;
-            this.txt_Size.Enabled = this.txt_width.Enabled = this.txt_height.Enabled = true;
         }
 
         private void subMenu_OpenFile_Click(object sender, EventArgs e)
@@ -445,6 +473,8 @@ namespace MapEditor
                             obj.Y = listNumber[3];
                             obj.Width = listNumber[4];
                             obj.Height = listNumber[5];
+                            if (listNumber.Count == 7)
+                                obj.Direct = listNumber[6];
 
                             this._listObject.Add(obj);
                         }
@@ -495,7 +525,7 @@ namespace MapEditor
 
         private void btnHide_Click(object sender, EventArgs e)
         {
-            if(!this.splitContainer1.Panel2Collapsed)
+            if (!this.splitContainer1.Panel2Collapsed)
             {
                 this.splitContainer1.Panel2Collapsed = true;
                 this.btnHide.Text = "<<";
@@ -505,6 +535,24 @@ namespace MapEditor
                 this.splitContainer1.Panel2Collapsed = false;
                 this.btnHide.Text = ">>";
             }
+        }
+
+        private void cb_typeObject_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            cb_directStair.Visible = true;
+        }
+
+        private void worldSpace_KeyPress(object sender, KeyPressEventArgs e)
+        {
+        }
+
+        private void menuStrip1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+        }
+
+        private void subMenu_DeleteObject_Click(object sender, EventArgs e)
+        {
+            this.check_deleteObject.Checked = (this.check_deleteObject.Checked) ? false : true;
         }
     }
 }
